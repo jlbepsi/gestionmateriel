@@ -18,16 +18,16 @@ library.add(
 
 class Login extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
-        this.AuthenticationService = new AuthService();
+        this.authenticationService = new AuthService();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillMount(){
-        if(this.AuthenticationService.loggedIn())
+        if(AuthService.loggedIn())
             this.props.history.replace('/');
     }
 
@@ -43,7 +43,7 @@ class Login extends Component {
         event.preventDefault();
 
 
-        this.AuthenticationService.login(this.state.username, this.state.password)
+        this.authenticationService.login(this.state.username, this.state.password)
             .then(res =>{
                 this.props.history.replace('/');
             })

@@ -58,7 +58,7 @@ class PortableRestituer extends Component {
 
         // Fixe les valeurs pour le portable
         // Validé par
-        let profil = this.AuthenticationService.getProfile();
+        let profil = this.authenticationService.getProfile();
         this.state.laptop.retourPar = profil.sub;
 
         // The parameters we are gonna pass to the fetch function

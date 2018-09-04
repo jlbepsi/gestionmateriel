@@ -7,12 +7,10 @@ class Profil extends Component {
 
     constructor(props) {
         super(props);
-
-        this.AuthenticationService = new AuthService();
     }
 
     render() {
-        const profil = this.AuthenticationService.getProfile();
+        const profil = AuthService.getProfile();
 
         console.log(profil);
         return (

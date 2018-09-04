@@ -8,12 +8,10 @@ class Logout extends Component {
 
     constructor(props) {
         super(props);
-
-        this.AuthenticationService = new AuthService();
     }
 
     render() {
-        this.AuthenticationService.logout()
+        AuthService.logout()
 
         return (
             <Redirect to='/login' />

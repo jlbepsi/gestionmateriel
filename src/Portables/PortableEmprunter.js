@@ -10,8 +10,6 @@ class PortableEmprunter extends Component {
     constructor(props) {
         super(props);
 
-        this.AuthenticationService = new AuthService();
-
         this.state = {
             laptop: {
                 id : 0,
@@ -74,7 +72,7 @@ class PortableEmprunter extends Component {
         // L'emprunteur :
         this.state.laptop.emprunteur = this.state.emprunteur;
         // Validé par
-        let profil = this.AuthenticationService.getProfile();
+        let profil = AuthService.getProfile();
         this.state.laptop.validePar = profil.sub;
 
         // The parameters we are gonna pass to the fetch function
@@ -88,7 +86,20 @@ class PortableEmprunter extends Component {
 
         const URL = PortableEmprunter.BASE_URL + '/emprunter/' + this.state.laptop.id;
 
-        fetch(URL, fetchData
+        AuthService.fetch(URL, fetchData)
+            .then(data => {
+                console.log(data);
+
+                // Retour à la liste des portables
+                this.props.history.push("/portables");
+            })
+            .catch(err => {
+                console.error('Erreur de modification', err);
+
+                this.setState({ errorMessage: err });
+            });
+
+        /*fetch(URL, fetchData
         )
             .then(response => {
                 if (response.ok) {
@@ -108,7 +119,7 @@ class PortableEmprunter extends Component {
                 console.error('Erreur de modification', err);
 
                 this.setState({ errorMessage: err });
-            });
+            });*/
     }
 
     handleEmprunteurSelected(emprunteurSelected) {
