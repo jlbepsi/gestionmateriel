@@ -101,7 +101,7 @@ class UsersSelect extends Component{
                 return;
             }
 
-            rows.push(<tr><td>{user.nom}</td><td>{user.prenom}</td>
+            rows.push(<tr key="{user.login}"><td>{user.nom}</td><td>{user.prenom}</td>
                 <td>{user.classe}</td>
                 <td><Button color="success" size="sm" onClick={() => this.selectUser(user)}>Sélectionner</Button></td>
             </tr>);

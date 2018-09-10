@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import MenuPrincipal from "./Html/MenuPrincipal";
 import Footer from "./Html/Footer"
+import AuthService from  "./Security/AuthService"
 
 const MainLayout = ({component: Component, ...rest}) => {
+
+    const isLoggedIn = AuthService.isLoggedIn();
+
     return (
+
+        isLoggedIn ? (
         <Route {...rest} render={matchProps => (
             <div>
                 <MenuPrincipal/>
@@ -15,6 +21,9 @@ const MainLayout = ({component: Component, ...rest}) => {
                 <Footer/>
             </div>
         )} />
+        ) : (
+            <Redirect to={{ pathname: '/login'}} />
+        )
     )
 };
 

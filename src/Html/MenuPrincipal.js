@@ -9,17 +9,16 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-import decode from "jwt-decode";
 
 class MenuPrincipal extends Component {
     state = {
         isOpen: false
-    }
+    };
     toggle = ()  => {
         this.setState({
             isOpen: !this.state.isOpen
         });
-    }
+    };
 
 
     render() {

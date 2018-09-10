@@ -3,9 +3,9 @@ import { Alert, Button, Form, FormGroup } from 'reactstrap';
 
 import UsersSelect from '../Users/UsersSelect'
 import AuthService from "../Security/AuthService";
+import MaterielAPI from "../WebService/MaterielAPI";
 
 class PortableEmprunter extends Component {
-    static BASE_URL = 'http://localhost:8080/api/portables';
 
     constructor(props) {
         super(props);
@@ -45,20 +45,18 @@ class PortableEmprunter extends Component {
         this.onDismissAlert = this.onDismissAlert.bind(this);
         this.handleEmprunteurSelected = this.handleEmprunteurSelected.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        // Gestion du matériel
+        this.materiels = new MaterielAPI();
     }
 
     componentDidMount() {
         const {match: {params}} = this.props;
-        const URL = PortableEmprunter.BASE_URL + '/' + params.id;
 
-        fetch(URL)
-            .then(result => {
-                return result.json()
-            })
+        this.materiels.getPortable(params.id)
             .then(data => {
                 this.setState({laptop: data})
             })
-
     }
 
     onDismissAlert() {
@@ -75,18 +73,7 @@ class PortableEmprunter extends Component {
         let profil = AuthService.getProfile();
         this.state.laptop.validePar = profil.sub;
 
-        // The parameters we are gonna pass to the fetch function
-        let fetchData = {
-            method: 'PUT',
-            headers: {
-                Accept: 'application/json', 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state.laptop)
-        };
-
-        const URL = PortableEmprunter.BASE_URL + '/emprunter/' + this.state.laptop.id;
-
-        AuthService.fetch(URL, fetchData)
+        this.materiels.emprunterPortable(this.state.laptop)
             .then(data => {
                 console.log(data);
 
@@ -96,30 +83,8 @@ class PortableEmprunter extends Component {
             .catch(err => {
                 console.error('Erreur de modification', err);
 
-                this.setState({ errorMessage: err });
+                this.setState({ errorMessage: 'Accès refusé' });
             });
-
-        /*fetch(URL, fetchData
-        )
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                // Raise an exception to reject the promise and trigger the outer .catch() handler.
-                // By default, an error response status (4xx, 5xx) does NOT cause the promise to reject!
-                throw Error(response.statusText);
-            })
-            .then(data => {
-                console.log(data);
-
-                // Retour à la liste des portables
-                this.props.history.push("/portables");
-            })
-            .catch(err => {
-                console.error('Erreur de modification', err);
-
-                this.setState({ errorMessage: err });
-            });*/
     }
 
     handleEmprunteurSelected(emprunteurSelected) {

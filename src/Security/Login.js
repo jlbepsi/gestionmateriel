@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Input, InputGroup, InputGroupAddon, Form, FormGroup } from 'reactstrap';
+import { Alert, Button, Input, InputGroup, InputGroupAddon, Form, FormGroup } from 'reactstrap';
 import AuthService from './AuthService';
 
 
@@ -21,13 +21,17 @@ class Login extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            errorMessage: ''
+        };
+
         this.authenticationService = new AuthService();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillMount(){
-        if(AuthService.loggedIn())
+        if(AuthService.isLoggedIn())
             this.props.history.replace('/');
     }
 
@@ -42,13 +46,15 @@ class Login extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-
-        this.authenticationService.login(this.state.username, this.state.password)
+        console.log("login.handleSubmit");
+        this.authenticationService.login(this.state.username, this.state.password, "ROLE_ADMIN")
             .then(res =>{
+                console.log("login AuthService.login.then");
                 this.props.history.replace('/');
             })
-            .catch(err =>{
-                alert(err);
+            .catch(error =>{
+                console.log(error);
+                this.setState({ errorMessage: 'Le login ou le mot de passe sont incorrects' });
             })
     }
 
@@ -60,6 +66,10 @@ class Login extends Component {
                     <div className="card">
                         <div className="card-header">EPSI Gestion du matériel</div>
                         <div className="card-body">
+
+                            <Alert color="danger" isOpen={this.state.errorMessage !== ''}>
+                                {this.state.errorMessage}
+                            </Alert>
 
                             <Form onSubmit={this.handleSubmit}>
                                 <FormGroup>
@@ -74,7 +84,7 @@ class Login extends Component {
                                         <Input
                                             type="text"
                                             name="username"
-                                            placeholder="Identifiant ECampus"
+                                            placeholder="Identifiant"
                                             onChange={this.handleChange}
                                         />
                                     </InputGroup>
@@ -91,7 +101,7 @@ class Login extends Component {
                                         <Input
                                             type="password"
                                             name="password"
-                                            placeholder="Mot de passe ECampus"
+                                            placeholder="Mot de passe"
                                             onChange={this.handleChange}
                                         />
                                     </InputGroup>
