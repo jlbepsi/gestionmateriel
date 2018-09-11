@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { Button, Form, FormGroup } from 'reactstrap';
 
 import AuthService from "../Security/AuthService";
+import PortableAPI from "../WebService/PortableAPI";
 
 class PortableRestituer extends Component {
-    static BASE_URL = 'http://localhost:8080/api/portables';
 
     constructor(props) {
         super(props);
@@ -38,16 +38,15 @@ class PortableRestituer extends Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        // Gestion des portables
+        this.portablesAPI = new PortableAPI();
     }
 
     componentDidMount() {
         const {match: {params}} = this.props;
-        const URL = PortableRestituer.BASE_URL + '/' + params.id;
 
-        fetch(URL)
-            .then(result => {
-                return result.json()
-            })
+        this.portablesAPI.getPortable(params.id)
             .then(data => {
                 this.setState({laptop: data})
             })
@@ -58,24 +57,10 @@ class PortableRestituer extends Component {
 
         // Fixe les valeurs pour le portable
         // Validé par
-        let profil = this.authenticationService.getProfile();
+        let profil = AuthService.getProfile();
         this.state.laptop.retourPar = profil.sub;
 
-        // The parameters we are gonna pass to the fetch function
-        let fetchData = {
-            method: 'PUT',
-            headers: {
-                Accept: 'application/json', 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state.laptop)
-        };
-
-        const URL = PortableRestituer.BASE_URL + '/restituer/' + this.state.laptop.id;
-
-        fetch(URL, fetchData)
-            .then(response => {
-                return response.json()
-            })
+        this.portablesAPI.restituerPortable(this.state.laptop)
             .then(data => {
                 console.log(data);
 
@@ -85,6 +70,7 @@ class PortableRestituer extends Component {
             .catch(err => {
                 console.error('Erreur de modification', err)
             });
+
     }
 
     render() {

@@ -1,54 +1,42 @@
-import AuthService from "../Security/AuthService";
+import BaseAPI from "./BaseAPI";
 
-export default class MaterielAPI {
-    static BASE_URL = 'http://localhost:8080/api/portables';
+export default class MaterielAPI extends BaseAPI {
 
     // Initializing important variables
-    constructor(domain) {
-        this.domain = domain || 'http://localhost:8080/api/' // API server domain
+    constructor() {
+        super('http://localhost:8080/api/materiels');
     }
 
     /*
-     * Gestion des portables
+     * Gestion des materiels
      *
      */
-    getPortables() {
-        return fetch(MaterielAPI.BASE_URL)
-            .then(MaterielAPI._checkStatus)
-            .then(response => response.json())
-    }
-    getPortable(id) {
-        return fetch(MaterielAPI.BASE_URL + '/' + id)
-            .then(MaterielAPI._checkStatus)
-            .then(response => response.json())
+    getMateriels() {
+        return super.apiGetAll();
     }
 
-    emprunterPortable(portable) {
-        // Données
-        let fetchData = {
-            method: 'PUT',
-            headers: {
-                'Content-Type' : 'application/json',
-                'Authorization' : 'Bearer ' + AuthService.getToken()
-            },
-            body: JSON.stringify(portable)
-        };
+    getMateriel(id) {
+        return super.apiGet(id);
+    }
 
+    addMateriel(materiel) {
+        return super.apiPost(materiel);
+    }
 
-        const url = MaterielAPI.BASE_URL + '/emprunter/' + portable.id;
+    updateMateriel(materiel) {
+        return super.apiPut(materiel.id, materiel);
+    }
 
-        return fetch(url, fetchData)
-            .then(MaterielAPI._checkStatus)
-            .then(response => response.json())
+    deleteMateriel(idMateriel) {
+        return super.apiDelete(idMateriel);
+    }
+
+    emprunterMateriel(materiel) {
+        return super.apiPut('emprunter/' + materiel.id, materiel);
     }
 
 
-    static _checkStatus(response) {
-        // raises an error in case response status is not a success
-        if (response.status >= 200 && response.status < 300) { // Success status lies between 200 to 300
-            return response;
-        }
-
-        throw new Error(response.statusText);
+    restituerMateriel(materiel) {
+        return super.apiPut('restituer/' + materiel.id, materiel);
     }
 }

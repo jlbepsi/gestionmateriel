@@ -3,7 +3,7 @@ import { Alert, Button, Form, FormGroup } from 'reactstrap';
 
 import UsersSelect from '../Users/UsersSelect'
 import AuthService from "../Security/AuthService";
-import MaterielAPI from "../WebService/MaterielAPI";
+import PortableAPI from "../WebService/PortableAPI";
 
 class PortableEmprunter extends Component {
 
@@ -46,14 +46,14 @@ class PortableEmprunter extends Component {
         this.handleEmprunteurSelected = this.handleEmprunteurSelected.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
-        // Gestion du matériel
-        this.materiels = new MaterielAPI();
+        // Gestion des portables
+        this.portablesAPI = new PortableAPI();
     }
 
     componentDidMount() {
         const {match: {params}} = this.props;
 
-        this.materiels.getPortable(params.id)
+        this.portablesAPI.getPortable(params.id)
             .then(data => {
                 this.setState({laptop: data})
             })
@@ -73,7 +73,7 @@ class PortableEmprunter extends Component {
         let profil = AuthService.getProfile();
         this.state.laptop.validePar = profil.sub;
 
-        this.materiels.emprunterPortable(this.state.laptop)
+        this.portablesAPI.emprunterPortable(this.state.laptop)
             .then(data => {
                 console.log(data);
 

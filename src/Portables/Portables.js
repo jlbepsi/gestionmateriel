@@ -7,11 +7,7 @@ import PortableTable from './PortableTable'
 
 
 class Portables extends Component {
-    /*state =  {
-        filterText: '',
-        ramMin: 4,
-        laptops: []
-    }*/
+
     constructor(props) {
         super(props);
         this.state = {
@@ -41,6 +37,7 @@ class Portables extends Component {
     deleteItem(id) {
         console.log("id=" + id);
 
+        /** TODO : faire la supression via l'API Materiel **/
         let newItems = this.state.laptops.filter( (item) => {
             return item.id !== id
         });

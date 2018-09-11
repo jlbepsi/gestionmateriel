@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 
 import PortableRow from './PortableRow'
+import AuthService from "../Security/AuthService";
+import PortableAPI from "../WebService/PortableAPI";
 
 // https://reactjs.org/docs/thinking-in-react.html
 
 
 class PortableTable extends Component {
+
 
     render() {
         const identifiantText = this.props.identifiantText.toLowerCase();
@@ -16,6 +19,10 @@ class PortableTable extends Component {
         const rows = [];
 
         let portableEmprunte = true;
+
+        const profil = AuthService.getProfile();
+        const roles = profil.roles;
+        const camModify = (roles.includes('ROLE_SUPERADMIN'));
 
         this.props.laptops.forEach((laptop) => {
 
@@ -39,6 +46,7 @@ class PortableTable extends Component {
             rows.push(
                 <PortableRow
                     laptop={laptop}
+                    canModify={camModify}
                     key={laptop.id}
                 />
             );
@@ -56,8 +64,10 @@ class PortableTable extends Component {
                             <th width="120">Mémoire</th>
                             <th>Disque</th>
                             <th>Emprunté par</th>
-                            <th width="120"></th>
-                            <th></th>
+                            <th width="120">&nbsp;</th>
+                            (canModify &&
+                            <th>&nbsp;</th>
+                            )
                         </tr>
 
                     </thead>

@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 
 class PortableRow extends Component {
     render() {
+        const canModify = this.props.canModify;
         const laptop = this.props.laptop;
 
         const emprunterPar = laptop.dateEmprunt == null ?
@@ -48,10 +49,12 @@ class PortableRow extends Component {
                 <td>
                     {button}
                 </td>
+                (canModify &&
                 <td>
                     <Button tag={Link} to={`/portable/edit/${laptop.id}`} color="primary" size="sm">Modifier</Button>&nbsp;
                     <Button color="danger" size="sm" onClick={() => this.deleteItem(laptop.id)}>Supprimer</Button>
                 </td>
+                )
             </tr>
         );
     }
