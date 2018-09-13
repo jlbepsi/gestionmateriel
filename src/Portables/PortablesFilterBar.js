@@ -35,7 +35,7 @@ class PortablesFilterBar extends Component {
                     Identifiant :
                     <Input type="text" name="text" id="identifiantText"
                            placeholder="Identifiant ..."
-                           value={this.props.filterText}
+                           value={this.props.identifiantText}
                            onChange={this.handleIdentifiantTextChange}
                     />
                 </Label>&nbsp;
@@ -52,7 +52,7 @@ class PortablesFilterBar extends Component {
                     Nom de l'emrunteur :
                     <Input type="text"
                            placeholder="commence par ..."
-                           value={this.props.filterText}
+                           value={this.props.emprunteurText}
                            onChange={this.handleEmprunteurTextChange}
                     />
                 </Label>&nbsp;

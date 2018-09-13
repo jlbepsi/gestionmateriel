@@ -16,14 +16,6 @@ class Stations extends Component {
         })
     }
 
-    deleteItem(id) {
-        console.log("id=" + id);
-
-        let newItems = this.state.materiels.filter( (item) => {
-            return item.id !== id
-        });
-        this.setState({ materiels: newItems });
-    }
 
     render() {
         return (
@@ -44,7 +36,6 @@ class Stations extends Component {
                         <th>Processeur</th>
                         <th>Emplacement</th>
                         <th>Crée par</th>
-                        <th width="200"></th>
                     </tr>
 
                     </thead>
@@ -59,10 +50,6 @@ class Stations extends Component {
                             }
                             <td>{item.place}</td>
                             <td>{item.createur.nom} {item.createur.prenom} le {item.creationDate}</td>
-                            <td>
-                                <Button color="primary" size="sm">Modifier</Button>&nbsp;
-                                <Button color="danger" size="sm" onClick={() => this.deleteItem(item.id)}>Supprimer</Button>
-                            </td>
                         </tr>
                     )}
                     </tbody>

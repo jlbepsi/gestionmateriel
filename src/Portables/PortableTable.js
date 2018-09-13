@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 
 import PortableRow from './PortableRow'
-import AuthService from "../Security/AuthService";
-import PortableAPI from "../WebService/PortableAPI";
 
 // https://reactjs.org/docs/thinking-in-react.html
 
@@ -16,13 +14,10 @@ class PortableTable extends Component {
         const emprunteurText = this.props.emprunteurText.toLowerCase();
         const ramMin = this.props.ramMin;
         const portableLibre = this.props.portableLibre;
+        const camModify = this.props.camModify;
         const rows = [];
 
         let portableEmprunte = true;
-
-        const profil = AuthService.getProfile();
-        const roles = profil.roles;
-        const camModify = (roles.includes('ROLE_SUPERADMIN'));
 
         this.props.laptops.forEach((laptop) => {
 

@@ -1,71 +1,104 @@
 import React, { Component } from 'react';
 import { Button, Table } from 'reactstrap';
 
+import AuthService from "../Security/AuthService";
+
+import {Link} from "react-router-dom";
+import MaterielAPI from "../WebService/MaterielAPI";
+import MaterielsFilterBar from "../Materiel/MaterielsFilterBar";
+import MaterielTable from "../Materiel/MaterielTable";
+
 class Materiels extends Component {
-    state =  {
-        materiels: [],
-        materiels2 : [
-            { id: 1, libelle: 'lib mat 1', descriptif: 'desc mat 1' },
-            { id: 2, libelle: 'lib mat 2', descriptif: 'desc mat 2' },
-            { id: 3, libelle: 'lib mat 3', descriptif: 'desc mat 3' },
-            { id: 4, libelle: 'lib mat 4', descriptif: 'desc mat 4' }
-        ]
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            libelleText: '',
+            materielLibre: false,
+            emprunteurText: '',
+            materiels: []
+        };
+
+        this.handleLibelleTextChange = this.handleLibelleTextChange.bind(this);
+        this.handleMaterielLibre = this.handleMaterielLibre.bind(this);
+        this.handleEmprunteurTextChange = this.handleEmprunteurTextChange.bind(this);
+
+        this.materielAPI = new MaterielAPI();
     }
+
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/computers')
-        .then(result => {
-            return result.json()
-        })
-        .then(data => {
-            this.setState({materiels: data})
+        this.materielAPI.getMateriels()
+            .then(data => {
+                this.setState({materiels: data})
+            })
+    }
+
+    deleteItem(id) {
+        console.log("id=" + id);
+
+        /** TODO : faire la supression via l'API Materiel **/
+        let newItems = this.state.materiels.filter( (item) => {
+            return item.id !== id
+        });
+        this.setState({ materiels: newItems });
+    }
+
+    handleLibelleTextChange(filterText) {
+        this.setState({
+            libelleText: filterText
+        });
+    }
+
+    handleEmprunteurTextChange(filterText) {
+        this.setState({
+            emprunteurText: filterText
+        });
+    }
+
+    handleRamChange(ramMin) {
+        this.setState({
+            ramMin: ramMin
         })
     }
 
-    displayMaterielItem(items) {
-        return (
-            items.map((materiel, index) =>  (
-                <tr>
-                    <td>{materiel.libelle}</td>
-                    <td>{materiel.description}</td>
-                    <td>
-                        <Button color="primary" size="sm">Modifier</Button>&nbsp;
-                        <Button color="danger" size="sm" onClick={() => this.onDeleteClick(index)}>Supprimer</Button>
-                    </td>
-                </tr>
-            ))
-        );
-    }
-
-    onDeleteClick(index) {
-        this.state.materiels2.splice(index, 1)
+    handleMaterielLibre(materielLibre) {
+        this.setState({
+            materielLibre: materielLibre
+        })
     }
 
     render() {
+        const profil = AuthService.getProfile();
+        const roles = profil.roles;
+        const camModify = (roles.includes('ROLE_SUPERADMIN'));
+
         return (
             <div className="main">
 
                 <h3>Liste du matériel</h3>
 
-                <p><a className="btn btn-primary btn-sm" href="">Nouveau matériel</a></p>
+                (camModify &&
+                <Button tag={Link} to="/materiel/new" color="primary" size="sm">Nouveau matériel</Button><br /><br />
+                )
 
-                <span>{this.state.materiels.length} matériels trouvés</span>
 
+                <MaterielsFilterBar
+                    libelleText={this.state.libelleText}
+                    emprunteurText={this.state.emprunteurText}
+                    materielLibre={this.state.materielLibre}
+                    onLibelleTextChange={this.handleLibelleTextChange}
+                    onEmprunteurTextChange={this.handleEmprunteurTextChange}
+                    onMaterielLibre={this.handleMaterielLibre}
+                />
 
-                <Table size="sm" bordered striped>
-                    <thead>
-                    <tr>
-                        <th>Libellé</th>
-                        <th>Descriptif</th>
-                        <th width="240"></th>
-                    </tr>
-
-                    </thead>
-                    <tbody>
-                        {this.displayMaterielItem(this.state.materiels)}
-                    </tbody>
-                </Table>
-
+                <MaterielTable
+                    materiels={this.state.materiels}
+                    camModify={camModify}
+                    libelleText={this.state.libelleText}
+                    emprunteurText={this.state.emprunteurText}
+                    materielLibre={this.state.materielLibre}
+                />
             </div>
 
 
