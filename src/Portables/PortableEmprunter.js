@@ -67,13 +67,14 @@ class PortableEmprunter extends Component {
         event.preventDefault();
 
         // Fixe les valeurs pour le portable
+        let laptop = this.state.laptop;
         // L'emprunteur :
-        this.state.laptop.emprunteur = this.state.emprunteur;
+        laptop.emprunteur = this.state.emprunteur;
         // Validé par
         let profil = AuthService.getProfile();
-        this.state.laptop.validePar = profil.sub;
+        laptop.validePar = profil.sub;
 
-        this.portablesAPI.emprunterPortable(this.state.laptop)
+        this.portablesAPI.emprunterPortable(laptop)
             .then(data => {
                 console.log(data);
 

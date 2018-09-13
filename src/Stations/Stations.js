@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Table } from 'reactstrap';
+import { Table } from 'reactstrap';
 
 class Stations extends Component {
     state =  {
-        materiels: []
+        stations: []
     }
 
     componentDidMount() {
@@ -12,7 +12,7 @@ class Stations extends Component {
             return result.json()
         })
         .then(data => {
-            this.setState({materiels: data})
+            this.setState({stations: data})
         })
     }
 
@@ -25,7 +25,7 @@ class Stations extends Component {
 
                 <p><a className="btn btn-primary btn-sm" href="">Nouvelle station</a></p>
 
-                <span>{this.state.materiels.length} station(s) trouvée(s)</span>
+                <span>{this.state.stations.length} station(s) trouvée(s)</span>
 
 
                 <Table size="sm" bordered striped>
@@ -40,7 +40,7 @@ class Stations extends Component {
 
                     </thead>
                     <tbody>
-                    {this.state.materiels.map( (item) =>
+                    {this.state.stations.map( (item) =>
                         <tr key={item.id}>
                             <td>{item.libelle}</td>
                             <td>{item.boitier.shortlibelle}</td>

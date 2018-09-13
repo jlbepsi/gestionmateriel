@@ -72,16 +72,20 @@ class Portables extends Component {
     render() {
         const profil = AuthService.getProfile();
         const roles = profil.roles;
-        const camModify = (roles.includes('ROLE_SUPERADMIN'));
+        const canModify = (roles.includes('ROLE_SUPERADMIN'));
 
         return (
             <div className="main">
 
                 <h3>Liste des portables</h3>
 
-                (camModify &&
-                <Button tag={Link} to="/portable/new" color="primary" size="sm">Nouveau portable</Button><br /><br />
-                )
+                {canModify &&
+                <div>
+                    <Button tag={Link} to="/portable/new" color="primary" size="sm">Nouveau portable</Button>
+                    <br />
+                    <br />
+                </div>
+                }
 
                 <PortablesFilterBar
                     identifiantText={this.state.identifiantText}
@@ -95,7 +99,7 @@ class Portables extends Component {
 
                 <PortableTable
                     laptops={this.state.laptops}
-                    camModify={camModify}
+                    canModify={canModify}
                     identifiantText={this.state.identifiantText}
                     emprunteurText={this.state.emprunteurText}
                     ramMin={this.state.ramMin}

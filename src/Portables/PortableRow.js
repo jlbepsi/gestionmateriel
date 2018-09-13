@@ -49,12 +49,13 @@ class PortableRow extends Component {
                 <td>
                     {button}
                 </td>
-                (canModify &&
+                {canModify &&
                 <td>
-                    <Button tag={Link} to={`/portable/edit/${laptop.id}`} color="primary" size="sm">Modifier</Button>&nbsp;
+                    <Button tag={Link} to={`/portable/edit/${laptop.id}`} color="primary"
+                            size="sm">Modifier</Button>&nbsp;
                     <Button color="danger" size="sm" onClick={() => this.deleteItem(laptop.id)}>Supprimer</Button>
                 </td>
-                )
+                }
             </tr>
         );
     }

@@ -10,30 +10,23 @@ class MaterielRow extends Component {
         const canModify = this.props.canModify;
         const materiel = this.props.materiel;
 
-        /*const emprunterPar = materiel.dateEmprunt == null ?
-            <td>&nbsp;</td> :
-            <td>{materiel.emprunteur.nom} {materiel.emprunteur.prenom}</td>;
-*/
-        let button;
-        if (materiel.dateEmprunt == null) {
-            button = <Button tag={Link} to={`/component/emprunter/${materiel.id}`} outline color="primary" size="sm">Emprunter</Button>
-        } else  {
-            button = <Button tag={Link} to={`/component/restituer/${materiel.id}`} color="success" size="sm">Restituer</Button>
-        }
+        const emprunterPar = <td>&nbsp;</td>;
+        let button = <td>&nbsp;</td>
 
         return (
             <tr>
-                <td>{materiel.libelle}</td>
-                /*{emprunterPar}*/
+                <td>{materiel.description}</td>
+                <td>{materiel.quantitystock}</td>
+                <td>{materiel.subcategory.category.libelle} {materiel.subcategory.libelle}</td>
+                {emprunterPar}
+                {button}
+                {canModify &&
                 <td>
-                    {button}
-                </td>
-                (canModify &&
-                <td>
-                    <Button tag={Link} to={`/component/edit/${materiel.id}`} color="primary" size="sm">Modifier</Button>&nbsp;
+                    <Button tag={Link} to={`/component/edit/${materiel.id}`} color="primary"
+                            size="sm">Modifier</Button>&nbsp;
                     <Button color="danger" size="sm" onClick={() => this.deleteItem(materiel.id)}>Supprimer</Button>
                 </td>
-                )
+                }
             </tr>
         );
     }

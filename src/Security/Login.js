@@ -47,7 +47,7 @@ class Login extends Component {
         event.preventDefault();
 
         console.log("login.handleSubmit");
-        this.authenticationService.login(this.state.username, this.state.password, "ROLE_ADMIN")
+        this.authenticationService.loginWithRole(this.state.username, this.state.password, "ROLE_ADMIN")
             .then(res =>{
                 console.log("login AuthService.login.then");
                 this.props.history.replace('/');

@@ -58,9 +58,10 @@ class PortableRestituer extends Component {
         // Fixe les valeurs pour le portable
         // Validé par
         let profil = AuthService.getProfile();
-        this.state.laptop.retourPar = profil.sub;
+        let laptop = this.state.laptop;
+        laptop.retourPar = profil.sub;
 
-        this.portablesAPI.restituerPortable(this.state.laptop)
+        this.portablesAPI.restituerPortable(laptop)
             .then(data => {
                 console.log(data);
 

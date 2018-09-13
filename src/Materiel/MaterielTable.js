@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 
 import MaterielRow from './MaterielRow'
+import AuthService from "../Security/AuthService";
 
 
 class MaterielTable extends Component {
@@ -17,7 +18,7 @@ class MaterielTable extends Component {
 
         const profil = AuthService.getProfile();
         const roles = profil.roles;
-        const camModify = (roles.includes('ROLE_SUPERADMIN'));
+        const canModify = (roles.includes('ROLE_SUPERADMIN'));
 
         this.props.materiels.forEach((materiel) => {
 
@@ -29,16 +30,11 @@ class MaterielTable extends Component {
             if (materiel.libelle.toLowerCase().indexOf(libelleText) === -1) {
                 return;
             }
-            /*if (emprunteurText !== '' &&
-                (materielEmprunte ||
-                    (materiel.emprunteur != null && materiel.emprunteur.nom.toLowerCase().indexOf(emprunteurText) === -1))) {
-                return;
-            }*/
 
             rows.push(
                 <MaterielRow
                     materiel={materiel}
-                    canModify={camModify}
+                    canModify={canModify}
                     key={materiel.id}
                 />
             );
@@ -46,13 +42,18 @@ class MaterielTable extends Component {
 
         return (
             <div>
-                <span>{this.state.materiels.length} matériels trouvés</span>
+                <span>{this.props.materiels.length} matériels trouvés</span>
                 <Table size="sm" bordered striped>
                     <thead>
                     <tr>
-                        <th>Libellé</th>
-                        <th>Descriptif</th>
-                        <th width="240">&nbsp;</th>
+                        <th>Description</th>
+                        <th>Quantité en stock</th>
+                        <th>Catégorie</th>
+                        <th>Emprunté par</th>
+                        <th width="120">&nbsp;</th>
+                        {canModify &&
+                        <td>&nbsp;</td>
+                        }
                     </tr>
 
                     </thead>

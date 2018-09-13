@@ -15,6 +15,7 @@ import Profil from "./Security/Profil"
 
 import MainLayout from "./MainLayout"
 import EmptyLayout from "./EmptyLayout";
+import Materiels from "./Materiel/Materiels";
 
 
 class Routeur extends Component {
@@ -28,6 +29,7 @@ class Routeur extends Component {
                 <MainLayout exact path='/portable/emprunter/:id' component={ PortableEmprunter } />
                 <MainLayout exact path='/portable/restituer/:id' component={ PortableRestituer } />
                 <MainLayout exact path='/stations' component={ Stations } />
+                <MainLayout exact path='/materiel' component={ Materiels } />
                 <MainLayout exact path='/command' component={ Command } />
                 <MainLayout exact path='/profil' component={ Profil } />
 

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Table } from 'reactstrap';
+import { Button } from 'reactstrap';
+import {Link} from "react-router-dom";
 
 import AuthService from "../Security/AuthService";
 
-import {Link} from "react-router-dom";
 import MaterielAPI from "../WebService/MaterielAPI";
 import MaterielsFilterBar from "../Materiel/MaterielsFilterBar";
 import MaterielTable from "../Materiel/MaterielTable";
@@ -71,16 +71,20 @@ class Materiels extends Component {
     render() {
         const profil = AuthService.getProfile();
         const roles = profil.roles;
-        const camModify = (roles.includes('ROLE_SUPERADMIN'));
+        const canModify = (roles.includes('ROLE_SUPERADMIN'));
 
         return (
             <div className="main">
 
                 <h3>Liste du matériel</h3>
 
-                (camModify &&
-                <Button tag={Link} to="/materiel/new" color="primary" size="sm">Nouveau matériel</Button><br /><br />
-                )
+                {canModify &&
+                    <div>
+                        <Button tag={Link} to="/materiel/new" color="primary" size="sm">Nouveau matériel</Button>
+                        <br />
+                        <br />
+                    </div>
+                }
 
 
                 <MaterielsFilterBar
@@ -94,7 +98,7 @@ class Materiels extends Component {
 
                 <MaterielTable
                     materiels={this.state.materiels}
-                    camModify={camModify}
+                    canModify={canModify}
                     libelleText={this.state.libelleText}
                     emprunteurText={this.state.emprunteurText}
                     materielLibre={this.state.materielLibre}

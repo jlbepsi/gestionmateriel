@@ -14,7 +14,7 @@ class PortableTable extends Component {
         const emprunteurText = this.props.emprunteurText.toLowerCase();
         const ramMin = this.props.ramMin;
         const portableLibre = this.props.portableLibre;
-        const camModify = this.props.camModify;
+        const canModify = this.props.canModify;
         const rows = [];
 
         let portableEmprunte = true;
@@ -41,7 +41,7 @@ class PortableTable extends Component {
             rows.push(
                 <PortableRow
                     laptop={laptop}
-                    canModify={camModify}
+                    canModify={canModify}
                     key={laptop.id}
                 />
             );
@@ -60,9 +60,9 @@ class PortableTable extends Component {
                             <th>Disque</th>
                             <th>Emprunté par</th>
                             <th width="120">&nbsp;</th>
-                            (canModify &&
+                            {canModify &&
                             <th>&nbsp;</th>
-                            )
+                            }
                         </tr>
 
                     </thead>

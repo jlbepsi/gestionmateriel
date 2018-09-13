@@ -47,7 +47,7 @@ class MenuPrincipal extends Component {
                                 </NavItem>
                                 <NavItem>
                                     <NavLink>
-                                        <Link to='/command'>Commandes</Link>
+                                        <Link to='/materiel'>Matériels</Link>
                                     </NavLink>
                                 </NavItem>
                             </Nav>
