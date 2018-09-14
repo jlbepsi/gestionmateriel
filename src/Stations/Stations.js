@@ -38,9 +38,6 @@ class Stations extends Component {
 
         const station = this.state.stations.find( station => station.id === id);
         if (window.confirm("Confirmer la suppression de la station '"+ station.libelle +"' ?")) {
-
-            /** TODO : faire la supression via l'API Station **/
-
             this.stationAPI.deleteStation(id)
                 . then(data => {
                     let newItems = this.state.stations.filter((item) => {

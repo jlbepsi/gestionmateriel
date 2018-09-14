@@ -37,11 +37,20 @@ class Materiels extends Component {
     deleteItem(id) {
         console.log("id=" + id);
 
-        /** TODO : faire la supression via l'API Materiel **/
-        let newItems = this.state.materiels.filter( (item) => {
-            return item.id !== id
-        });
-        this.setState({ materiels: newItems });
+        const materiel = this.state.materiels.find( materiel => materiel.id === id);
+        if (window.confirm("Confirmer la suppression du matériel '"+ materiel.libelle +"' ?")) {
+            this.materielAPI.deleteMateriel(id)
+                . then(data => {
+                    let newItems = this.state.materiels.filter((item) => {
+                        return item.id !== id
+                    });
+                    this.setState({materiels: newItems});
+                })
+                .catch(err => {
+                    alert('La suppression a échoué');
+                    console.error('Suppression impossible ', err)
+                });
+        }
     }
 
     handleLibelleTextChange(filterText) {
@@ -54,12 +63,6 @@ class Materiels extends Component {
         this.setState({
             emprunteurText: filterText
         });
-    }
-
-    handleRamChange(ramMin) {
-        this.setState({
-            ramMin: ramMin
-        })
     }
 
     handleMaterielLibre(materielLibre) {

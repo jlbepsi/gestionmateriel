@@ -41,9 +41,6 @@ class Portables extends Component {
 
         const portable = this.state.laptops.find( laptop => laptop.id === id);
         if (window.confirm("Confirmer la suppression du portable '"+ portable.identifiant +"' ?")) {
-
-            /** TODO : faire la supression via l'API Portable **/
-
             this.portableAPI.deletePortable(id)
                 . then(data => {
                     let newItems = this.state.laptops.filter((item) => {
