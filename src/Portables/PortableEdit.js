@@ -12,14 +12,11 @@ class PortableEdit extends PortableModify {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+
     componentDidMount() {
         const {match: {params}} = this.props;
 
-        console.log(params.id);
-        fetch(`http://localhost:8080/api/portables/${params.id}`)
-            .then(result => {
-                return result.json()
-            })
+        this.portablesAPI.getPortable(params.id)
             .then(data => {
                 this.setState({laptop: data})
             })
@@ -28,20 +25,7 @@ class PortableEdit extends PortableModify {
     handleSubmit(event) {
         event.preventDefault();
 
-        // The parameters we are gonna pass to the fetch function
-        let fetchData = {
-            method: 'PUT',
-            headers: {
-                Accept: 'application/json', 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state.laptop)
-        };
-
-        fetch(`http://localhost:8080/api/laptops/${this.state.laptop.id}`, fetchData
-        )
-            .then(response => {
-                return response.json()
-            })
+        this.portablesAPI.updatePortable(this.state.laptop)
             .then(data => {
                 alert("Modifications enregistrées");
             })

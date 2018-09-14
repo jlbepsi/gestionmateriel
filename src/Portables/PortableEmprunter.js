@@ -16,7 +16,6 @@ class PortableEmprunter extends Component {
                 libelle : '',
                 libellecourt : '',
                 description : '',
-                identifiant : '',
                 couleur : '',
                 marque : '',
                 memory : 4,
@@ -102,14 +101,14 @@ class PortableEmprunter extends Component {
         if (this.state.laptop.hdd1 > 1023) {
             allHdd = (this.state.laptop.hdd1 / 1024) + " To";
         } else {
-            allHdd = this.state.laptop.hdd1 + " Mo";
+            allHdd = this.state.laptop.hdd1 + " Go";
         }
         if (this.state.laptop.hdd2 > 0) {
             allHdd += " et ";
             if (this.state.laptop.hdd2 > 1023) {
                 allHdd += (this.state.laptop.hdd2 / 1024) + " To";
             } else {
-                allHdd += this.state.laptop.hdd2 + " Mo";
+                allHdd += this.state.laptop.hdd2 + " Go";
             }
         }
 

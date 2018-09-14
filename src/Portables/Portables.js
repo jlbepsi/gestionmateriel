@@ -24,6 +24,7 @@ class Portables extends Component {
         this.handleEmprunteurTextChange = this.handleEmprunteurTextChange.bind(this);
         this.handleRamChange = this.handleRamChange.bind(this);
         this.handlePortableLibre = this.handlePortableLibre.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
 
         this.portableAPI = new PortableAPI();
     }
@@ -38,11 +39,23 @@ class Portables extends Component {
     deleteItem(id) {
         console.log("id=" + id);
 
-        /** TODO : faire la supression via l'API Portable **/
-        let newItems = this.state.laptops.filter( (item) => {
-            return item.id !== id
-        });
-        this.setState({ laptops: newItems });
+        const portable = this.state.laptops.find( laptop => laptop.id === id);
+        if (window.confirm("Confirmer la suppression du portable '"+ portable.identifiant +"' ?")) {
+
+            /** TODO : faire la supression via l'API Portable **/
+
+            this.portableAPI.deletePortable(id)
+                . then(data => {
+                    let newItems = this.state.laptops.filter((item) => {
+                        return item.id !== id
+                    });
+                    this.setState({laptops: newItems});
+                })
+                .catch(err => {
+                    alert('La suppression a échoué');
+                    console.error('Suppression impossible ', err)
+                });
+        }
     }
 
     handleIdentifiantTextChange(filterText) {
@@ -72,7 +85,7 @@ class Portables extends Component {
     render() {
         const profil = AuthService.getProfile();
         const roles = profil.roles;
-        const canModify = (roles.includes('ROLE_SUPERADMIN'));
+        const canModify = (roles.includes('ROLE_SUPER_ADMIN'));
 
         return (
             <div className="main">
@@ -104,6 +117,7 @@ class Portables extends Component {
                     emprunteurText={this.state.emprunteurText}
                     ramMin={this.state.ramMin}
                     portableLibre={this.state.portableLibre}
+                    deleteItem ={this.deleteItem}
                 />
             </div>
 

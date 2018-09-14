@@ -17,7 +17,7 @@ class PortableTable extends Component {
         const canModify = this.props.canModify;
         const rows = [];
 
-        let portableEmprunte = true;
+        let portableEmprunte = true, identifiant = '';
 
         this.props.laptops.forEach((laptop) => {
 
@@ -29,7 +29,8 @@ class PortableTable extends Component {
             if (laptop.memory < ramMin) {
                 return;
             }
-            if (laptop.identifiant.toLowerCase().indexOf(identifiantText) === -1) {
+            identifiant = laptop.marque.toLowerCase() + "-" + laptop.id;
+            if (identifiant.indexOf(identifiantText) === -1) {
                 return;
             }
             if (emprunteurText !== '' &&
@@ -43,6 +44,7 @@ class PortableTable extends Component {
                     laptop={laptop}
                     canModify={canModify}
                     key={laptop.id}
+                    deleteItem ={this.props.deleteItem}
                 />
             );
         });

@@ -7,15 +7,16 @@ import {Link} from "react-router-dom";
 
 class PortableRow extends Component {
     render() {
-        const canModify = this.props.canModify;
         const laptop = this.props.laptop;
+        const portableLibre = (laptop.dateEmprunt == null);
+        const canModify = (this.props.canModify && portableLibre);
 
-        const emprunterPar = laptop.dateEmprunt == null ?
+        const emprunterPar = portableLibre ?
             <td>&nbsp;</td> :
             <td>{laptop.emprunteur.nom} {laptop.emprunteur.prenom}</td>;
 
         let button;
-        if (laptop.dateEmprunt == null) {
+        if (portableLibre) {
             button = <Button tag={Link} to={`/portable/emprunter/${laptop.id}`} outline color="primary" size="sm">Emprunter</Button>
         } else  {
             button = <Button tag={Link} to={`/portable/restituer/${laptop.id}`} color="success" size="sm">Restituer</Button>
@@ -25,14 +26,14 @@ class PortableRow extends Component {
         if (laptop.hdd1 > 1023) {
             allHdd = (laptop.hdd1 / 1024) + " To";
         } else {
-            allHdd = laptop.hdd1 + " Mo";
+            allHdd = laptop.hdd1 + " Go";
         }
         if (laptop.hdd2 > 0) {
             allHdd += " et ";
             if (laptop.hdd2 > 1023) {
                 allHdd += (laptop.hdd2 / 1024) + " To";
             } else {
-                allHdd += laptop.hdd2 + " Mo";
+                allHdd += laptop.hdd2 + " Go";
             }
         }
 
@@ -40,7 +41,7 @@ class PortableRow extends Component {
 
         return (
             <tr>
-                <td>{laptop.identifiant}</td>
+                <td>{laptop.marque}-{laptop.id}</td>
                 <td>{laptop.libelle}</td>
                 <td>{laptop.cpu}</td>
                 <td>{laptop.memory} Go</td>
@@ -53,7 +54,7 @@ class PortableRow extends Component {
                 <td>
                     <Button tag={Link} to={`/portable/edit/${laptop.id}`} color="primary"
                             size="sm">Modifier</Button>&nbsp;
-                    <Button color="danger" size="sm" onClick={() => this.deleteItem(laptop.id)}>Supprimer</Button>
+                    <Button color="danger" size="sm" onClick={() => this.props.deleteItem(laptop.id)}>Supprimer</Button>
                 </td>
                 }
             </tr>

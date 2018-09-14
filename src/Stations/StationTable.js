@@ -1,50 +1,51 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 
-import MaterielRow from './MaterielRow'
+import StationRow from "./StationRow";
 
 
-class MaterielTable extends Component {
+class StationTable extends Component {
 
 
     render() {
         const libelleText = this.props.libelleText.toLowerCase();
-        const materielLibre = this.props.materielLibre;
+        const stationLibre = this.props.stationLibre;
         const emprunteurText = this.props.emprunteurText;
         const canModify = this.props.canModify;
         const rows = [];
 
-        let materielEmprunte = true;
+        let stationEmprunte = true;
 
-        this.props.materiels.forEach((materiel) => {
+        this.props.stations.forEach((station) => {
 
-            materielEmprunte = false; //(materiel.dateEmprunt != null);
+            stationEmprunte = false; //(station.dateEmprunt != null);
 
-            if (materielLibre && materielEmprunte) {
+            if (stationLibre && stationEmprunte) {
                 return;
             }
-            if (materiel.libelle.toLowerCase().indexOf(libelleText) === -1) {
+            if (station.libelle.toLowerCase().indexOf(libelleText) === -1) {
                 return;
             }
 
             rows.push(
-                <MaterielRow
-                    materiel={materiel}
+                <StationRow
+                    station={station}
                     canModify={canModify}
-                    key={materiel.id}
+                    key={station.id}
                 />
             );
         });
 
         return (
             <div>
-                <span>{this.props.materiels.length} matériels trouvés</span>
+                <span>{this.props.stations.length} stations trouvées</span>
                 <Table size="sm" bordered striped>
                     <thead>
                     <tr>
+                        <th>Libelle</th>
+                        <th>Emplacement</th>
                         <th>Description</th>
-                        <th>Quantité en stock</th>
-                        <th>Catégorie</th>
+                        <th>Composants</th>
                         <th>Emprunté par</th>
                         <th width="120">&nbsp;</th>
                         {canModify &&
@@ -65,4 +66,4 @@ class MaterielTable extends Component {
 
 }
 
-export default MaterielTable;
+export default StationTable;

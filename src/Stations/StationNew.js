@@ -1,20 +1,20 @@
-import PortableModify from "./PortableModify";
+import StationModify from "./StationModify";
 
-class PortableNew extends PortableModify {
+class StationNew extends StationModify {
 
     constructor(props) {
         super(props);
 
-        this.title = "Ajout d'un portable";
+        this.title = "Ajout d'une station";
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
-        this.portablesAPI.addPortable(this.state.laptop)
+        this.stationsAPI.addStation(this.state.laptop)
             .then(data => {
-                alert("Portable ajouté");
+                alert("Station ajoutée");
             })
             .catch(err => {
                 console.error('Request failed', err)
@@ -22,4 +22,4 @@ class PortableNew extends PortableModify {
     }
 }
 
-export default PortableNew;
+export default StationNew;

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
-import PortableAPI from "../WebService/PortableAPI";
+import StationAPI from "../WebService/StationAPI";
 
-class PortableModify extends Component {
+class StationModify extends Component {
 
     constructor(props) {
         super(props);
@@ -34,8 +34,8 @@ class PortableModify extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
 
-        // Gestion des portables
-        this.portablesAPI = new PortableAPI();
+        // Gestion des stations
+        this.stationsAPI = new StationAPI();
     }
 
 
@@ -43,13 +43,6 @@ class PortableModify extends Component {
         const {name, value} = event.target;
         let laptop = {...this.state.laptop, [name]: value};
         this.setState({laptop});
-
-        /*const value = event.target.value;
-        const name = 'laptop.' + event.target.name;
-
-        this.setState({
-            [name]: value
-        });*/
     }
 
     handleSelectChange(event) {
@@ -66,12 +59,12 @@ class PortableModify extends Component {
                 <h3>{this.title}</h3>
 
                 <Form onSubmit={this.handleSubmit}>
-                    
+
                     <FormGroup>
                         <Label for="marque">Marque</Label>
-                            <Input type="text" name="marque" id="marque"
-                                   value={this.state.laptop.marque}
-                                   onChange={this.handleInputChange} />
+                        <Input type="text" name="marque" id="marque"
+                               value={this.state.laptop.marque}
+                               onChange={this.handleInputChange} />
                     </FormGroup>
 
                     <FormGroup>
@@ -115,7 +108,7 @@ class PortableModify extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                    <Label for="memory">Mémoire</Label>
+                        <Label for="memory">Mémoire</Label>
                         <select className="form-control" name="memory" id="memory"
                                 value={this.state.laptop.memory}
                                 onChange={this.handleSelectChange}>
@@ -175,4 +168,4 @@ class PortableModify extends Component {
     }
 }
 
-export default PortableModify;
+export default StationModify;
