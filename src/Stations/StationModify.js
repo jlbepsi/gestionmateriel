@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import StationAPI from "../WebService/StationAPI";
+import MaterielAPI from "../WebService/MaterielAPI";
+import SelectMateriel from "./SelectMateriel";
 
 class StationModify extends Component {
 
@@ -10,19 +12,39 @@ class StationModify extends Component {
 
         this.title = "";
         this.state = {
-            laptop: {
+            boitiers: null,
+            cartemeres: null,
+            processeurs: null,
+            disquesDurs: null,
+            memoires: null,
+            carteReseaux: null,
+            carteGraphique: null,
+            station: {
                 id : 0,
                 libelle : '',
-                libellecourt : '',
+                place : '',
                 description : '',
-                couleur : '',
-                marque : '',
-                memory : 4,
-                screen : 0,
-                cpu : '',
-                hdd1 : 0,
-                hdd2 : 0,
-                cdrom : 0,
+                creationDate : null,
+                updateDate : null,
+                createur : null,
+                replace : '',
+                boitier: null,
+                cartemere: null,
+                cpu: null,
+                ram1: null,
+                ram2: null,
+                ram3: null,
+                ram4: null,
+                hdd1: null,
+                hdd2: null,
+                hdd3: null,
+                hdd4: null,
+                hdd5: null,
+                hdd6: null,
+                networkCard1: null,
+                networkCard2: null,
+                networkCard3: null,
+                graphicCard: null,
                 emprunteur : null,
                 dateEmprunt : null,
                 validePar : null,
@@ -36,22 +58,77 @@ class StationModify extends Component {
 
         // Gestion des stations
         this.stationsAPI = new StationAPI();
+        // Liste du matériel
+        this.materielAPI = new MaterielAPI();
+    }
+
+    componentDidMount() {
+
+        const {match: {params}} = this.props;
+
+        this.materielAPI.getMateriels()
+            .then(data => {
+                //this.setState({materiels: data})
+
+                let boitiers = [], cartemeres = [],
+                    processeurs = [],
+                    memoires = [],
+                    disquesDurs = [],
+                    carteReseaux = [],
+                    carteGraphique = [];
+
+                data.forEach((materiel) => {
+
+                    switch (materiel.subcategory.category.id) {
+                        case 1: // Boitier
+                            boitiers.push(materiel);
+                            break;
+                        case 2: // Carte mère
+                            cartemeres.push(materiel);
+                            break;
+                        case 3: // Processeur
+                            processeurs.push(materiel);
+                            break;
+                        case 4: // Mémoires
+                            memoires.push(materiel);
+                            break;
+                        case 5: // Disques durs
+                            disquesDurs.push(materiel);
+                            break;
+                    }
+                });
+
+                console.log(memoires);
+
+                this.setState({boitiers : boitiers});
+                this.setState({cartemeres : cartemeres});
+                this.setState({processeurs : processeurs});
+                this.setState({memoires : memoires});
+                this.setState({disquesDurs : disquesDurs});
+            });
+
     }
 
 
     handleInputChange(event) {
         const {name, value} = event.target;
-        let laptop = {...this.state.laptop, [name]: value};
-        this.setState({laptop});
+        let station = {...this.state.station, [name]: value};
+        this.setState({station});
+    }
+    handleSelectChange(name, value) {
+        console.log("name=" + name + ", value:");
+        console.log(value);
+        let station = {...this.state.station, [name]: value};
+        this.setState({station});
     }
 
-    handleSelectChange(event) {
+    /*handleSelectChange(event) {
         const value = event.target.value;
         const name = event.target.name;
 
-        let laptop = {...this.state.laptop, [name]: value};
-        this.setState({laptop});
-    }
+        let station = {...this.state.station, [name]: value};
+        this.setState({station});
+    }*/
 
     render() {
         return (
@@ -61,101 +138,154 @@ class StationModify extends Component {
                 <Form onSubmit={this.handleSubmit}>
 
                     <FormGroup>
-                        <Label for="marque">Marque</Label>
-                        <Input type="text" name="marque" id="marque"
-                               value={this.state.laptop.marque}
-                               onChange={this.handleInputChange} />
-                    </FormGroup>
-
-                    <FormGroup>
                         <Label for="libelle">Libellé</Label>
                         <Input type="text" name="libelle" id="libelle"
-                               value={this.state.laptop.libelle}
+                               value={this.state.station.libelle}
                                onChange={this.handleInputChange} />
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="libellecourt">Libellé court</Label>
-                        <Input type="text" name="libellecourt" id="libellecourt"
-                               value={this.state.laptop.libellecourt}
+                        <Label for="place">Emplacement</Label>
+                        <Input type="text" name="place" id="place"
+                               value={this.state.station.place}
+                               onChange={this.handleInputChange} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="description">Description</Label>
+                        <Input type="text" name="description" id="description"
+                               value={this.state.station.description}
                                onChange={this.handleInputChange} />
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="couleur">Couleur</Label>
-                        <Input type="text" name="couleur" id="couleur"
-                               value={this.state.laptop.couleur}
-                               onChange={this.handleInputChange} />
+                        <Label for="boitier">Boitier</Label>
+
+                        <SelectMateriel id="boitier"
+                            materiel={this.state.station.boitier}
+                            onChangeMateriel={this.handleSelectChange}
+                            optionsMateriel={this.state.boitiers}>
+                        </SelectMateriel>
+
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="screen">Ecran</Label>
-                        <select className="form-control" name="screen" id="screen"
-                                value={this.state.laptop.screen}
-                                onChange={this.handleSelectChange}>
-                            <option value='13'>13</option>
-                            <option value='14'>14</option>
-                            <option value='15'>15</option>
-                            <option value='17'>17</option>
-                        </select>
+                        <Label for="cartemere">Carte mère</Label>
+
+                        <SelectMateriel id="cartemere"
+                                        materiel={this.state.station.cartemere}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.boicartemerestiers}>
+                        </SelectMateriel>
                     </FormGroup>
 
                     <FormGroup>
                         <Label for="cpu">Processeur</Label>
-                        <Input type="text" name="cpu" id="cpu"
-                               value={this.state.laptop.cpu}
-                               onChange={this.handleInputChange} />
+
+                        <SelectMateriel id="cpu"
+                                        materiel={this.state.station.cpu}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.processeurs}>
+                        </SelectMateriel>
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="memory">Mémoire</Label>
-                        <select className="form-control" name="memory" id="memory"
-                                value={this.state.laptop.memory}
-                                onChange={this.handleSelectChange}>
-                            <option value='2'>2</option>
-                            <option value='4'>4</option>
-                            <option value='6'>6</option>
-                            <option value='8'>8</option>
-                            <option value='12'>12</option>
-                            <option value='16'>16</option>
-                        </select>
+                        <Label for="ram1">Ram - DIMM 1</Label>
+
+                        <SelectMateriel id="ram1"
+                                        materiel={this.state.station.ram1}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.memoires}>
+                        </SelectMateriel>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="ram2">Ram - DIMM 2</Label>
+
+                        <SelectMateriel id="ram2"
+                                        materiel={this.state.station.ram2}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.memoires}>
+                        </SelectMateriel>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="ram3">Ram - DIMM 3</Label>
+
+                        <SelectMateriel id="ram3"
+                                        materiel={this.state.station.ram3}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.memoires}>
+                        </SelectMateriel>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="ram4">Ram - DIMM 4</Label>
+
+                        <SelectMateriel id="ram4"
+                                        materiel={this.state.station.ram4}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.memoires}>
+                        </SelectMateriel>
                     </FormGroup>
 
                     <FormGroup>
                         <Label for="hdd1">Disque 1</Label>
-                        <select className="form-control" name="hdd1" id="hdd1"
-                                value={this.state.laptop.hdd1}
-                                onChange={this.handleSelectChange}>
-                            <option value="300">300 Go</option>
-                            <option value="320">320 Go</option>
-                            <option value="512">500 Go</option>
-                            <option value="600">600 Go</option>
-                            <option value="750">750 Go</option>
-                            <option value="1024">1 To</option>
-                            <option value="1536">1,5 To</option>
-                            <option value="2048">2 To</option>
-                            <option value="3072">3 To</option>
-                            <option value="4096">4 To</option>
-                        </select>
+
+                        <SelectMateriel id="hdd1"
+                                        materiel={this.state.station.hdd1}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.disquesDurs}>
+                        </SelectMateriel>
                     </FormGroup>
 
                     <FormGroup>
                         <Label for="hdd2">Disque 2</Label>
-                        <select className="form-control" name="hdd2" id="hdd2"
-                                value={this.state.laptop.hdd2}
-                                onChange={this.handleSelectChange}>
-                            <option value="0">Aucun</option>
-                            <option value="300">300 Go</option>
-                            <option value="320">320 Go</option>
-                            <option value="512">500 Go</option>
-                            <option value="600">600 Go</option>
-                            <option value="750">750 Go</option>
-                            <option value="1024">1 To</option>
-                            <option value="1536">1,5 To</option>
-                            <option value="2048">2 To</option>
-                            <option value="3072">3 To</option>
-                            <option value="4096">4 To</option>
-                        </select>
+
+                        <SelectMateriel id="hdd2"
+                                        materiel={this.state.station.hdd2}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.disquesDurs}>
+                        </SelectMateriel>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="hdd3">Disque 3</Label>
+
+                        <SelectMateriel id="hdd3"
+                                        materiel={this.state.station.hdd3}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.disquesDurs}>
+                        </SelectMateriel>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="hdd4">Disque 4</Label>
+
+                        <SelectMateriel id="hdd4"
+                                        materiel={this.state.station.hdd4}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.disquesDurs}>
+                        </SelectMateriel>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="hdd5">Disque 5</Label>
+
+                        <SelectMateriel id="hdd5"
+                                        materiel={this.state.station.hdd5}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.disquesDurs}>
+                        </SelectMateriel>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="hdd6">Disque 6</Label>
+
+                        <SelectMateriel id="hdd6"
+                                        materiel={this.state.station.hdd6}
+                                        onChangeMateriel={this.handleSelectChange}
+                                        optionsMateriel={this.state.disquesDurs}>
+                        </SelectMateriel>
                     </FormGroup>
 
 

@@ -45,7 +45,7 @@ class StationRow extends Component {
                 {button}
                 {canModify &&
                 <td>
-                    <Button tag={Link} to={`/component/edit/${station.id}`} color="primary"
+                    <Button tag={Link} to={`/stations/edit/${station.id}`} color="primary"
                             size="sm">Modifier</Button>&nbsp;
                     <Button color="danger" size="sm" onClick={() => this.deleteItem(station.id)}>Supprimer</Button>
                 </td>

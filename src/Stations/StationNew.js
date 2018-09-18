@@ -12,7 +12,7 @@ class StationNew extends StationModify {
     handleSubmit(event) {
         event.preventDefault();
 
-        this.stationsAPI.addStation(this.state.laptop)
+        this.stationsAPI.addStation(this.state.station)
             .then(data => {
                 alert("Station ajoutée");
             })
