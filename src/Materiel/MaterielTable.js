@@ -44,6 +44,7 @@ class MaterielTable extends Component {
                     <tr>
                         <th>Description</th>
                         <th>Quantité en stock</th>
+                        <th>Quantité utilisé</th>
                         <th>Catégorie</th>
                         <th>Emprunté par</th>
                         <th width="120">&nbsp;</th>

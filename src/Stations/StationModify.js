@@ -38,9 +38,6 @@ class StationModify extends Component {
                 hdd1: null,
                 hdd2: null,
                 hdd3: null,
-                hdd4: null,
-                hdd5: null,
-                hdd6: null,
                 networkCard1: null,
                 networkCard2: null,
                 networkCard3: null,
@@ -95,16 +92,22 @@ class StationModify extends Component {
                         case 5: // Disques durs
                             disquesDurs.push(materiel);
                             break;
+                        case 6: // Cartes réseaux
+                            carteReseaux.push(materiel);
+                            break;
+                        case 7: // Cartes graphiques
+                            carteGraphique.push(materiel);
+                            break;
                     }
                 });
-
-                console.log(memoires);
 
                 this.setState({boitiers : boitiers});
                 this.setState({cartemeres : cartemeres});
                 this.setState({processeurs : processeurs});
                 this.setState({memoires : memoires});
                 this.setState({disquesDurs : disquesDurs});
+                this.setState({carteReseaux : carteReseaux});
+                this.setState({carteGraphique : carteGraphique});
             });
 
     }
@@ -122,15 +125,10 @@ class StationModify extends Component {
         this.setState({station});
     }
 
-    /*handleSelectChange(event) {
-        const value = event.target.value;
-        const name = event.target.name;
-
-        let station = {...this.state.station, [name]: value};
-        this.setState({station});
-    }*/
-
     render() {
+        const station = this.state.station;
+        console.log(station);
+
         return (
             <div className="main">
                 <h3>{this.title}</h3>
@@ -174,7 +172,7 @@ class StationModify extends Component {
                         <SelectMateriel id="cartemere"
                                         materiel={this.state.station.cartemere}
                                         onChangeMateriel={this.handleSelectChange}
-                                        optionsMateriel={this.state.boicartemerestiers}>
+                                        optionsMateriel={this.state.cartemeres}>
                         </SelectMateriel>
                     </FormGroup>
 
@@ -214,7 +212,8 @@ class StationModify extends Component {
                         <SelectMateriel id="ram3"
                                         materiel={this.state.station.ram3}
                                         onChangeMateriel={this.handleSelectChange}
-                                        optionsMateriel={this.state.memoires}>
+                                        optionsMateriel={this.state.memoires}
+                                        optionAucun={"Aucune"}>
                         </SelectMateriel>
                     </FormGroup>
 
@@ -224,7 +223,8 @@ class StationModify extends Component {
                         <SelectMateriel id="ram4"
                                         materiel={this.state.station.ram4}
                                         onChangeMateriel={this.handleSelectChange}
-                                        optionsMateriel={this.state.memoires}>
+                                        optionsMateriel={this.state.memoires}
+                                        optionAucun={"Aucune"}>
                         </SelectMateriel>
                     </FormGroup>
 
@@ -244,7 +244,8 @@ class StationModify extends Component {
                         <SelectMateriel id="hdd2"
                                         materiel={this.state.station.hdd2}
                                         onChangeMateriel={this.handleSelectChange}
-                                        optionsMateriel={this.state.disquesDurs}>
+                                        optionsMateriel={this.state.disquesDurs}
+                                        optionAucun={"Aucun"}>
                         </SelectMateriel>
                     </FormGroup>
 
@@ -254,40 +255,43 @@ class StationModify extends Component {
                         <SelectMateriel id="hdd3"
                                         materiel={this.state.station.hdd3}
                                         onChangeMateriel={this.handleSelectChange}
-                                        optionsMateriel={this.state.disquesDurs}>
+                                        optionsMateriel={this.state.disquesDurs}
+                                        optionAucun={"Aucun"}>
                         </SelectMateriel>
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="hdd4">Disque 4</Label>
+                        <Label for="networkCard1">Carte réseau 1</Label>
 
-                        <SelectMateriel id="hdd4"
-                                        materiel={this.state.station.hdd4}
+                        <SelectMateriel id="networkCard1"
+                                        materiel={this.state.station.networkCard1}
                                         onChangeMateriel={this.handleSelectChange}
-                                        optionsMateriel={this.state.disquesDurs}>
+                                        optionsMateriel={this.state.carteReseaux}
+                                        optionAucun={"Aucune"}>
                         </SelectMateriel>
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="hdd5">Disque 5</Label>
+                        <Label for="networkCard2">Carte réseau 2</Label>
 
-                        <SelectMateriel id="hdd5"
-                                        materiel={this.state.station.hdd5}
+                        <SelectMateriel id="networkCard2"
+                                        materiel={this.state.station.networkCard2}
                                         onChangeMateriel={this.handleSelectChange}
-                                        optionsMateriel={this.state.disquesDurs}>
+                                        optionsMateriel={this.state.carteReseaux}
+                                        optionAucun={"Aucune"}>
                         </SelectMateriel>
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="hdd6">Disque 6</Label>
+                        <Label for="graphicCard">Carte graphique 1</Label>
 
-                        <SelectMateriel id="hdd6"
-                                        materiel={this.state.station.hdd6}
+                        <SelectMateriel id="graphicCard"
+                                        materiel={this.state.station.graphicCard}
                                         onChangeMateriel={this.handleSelectChange}
-                                        optionsMateriel={this.state.disquesDurs}>
+                                        optionsMateriel={this.state.carteGraphique}
+                                        optionAucun={"Aucune"}>
                         </SelectMateriel>
                     </FormGroup>
-
 
                     <FormGroup>
                         <Button color='primary' >Enregistrer</Button>

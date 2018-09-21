@@ -13,10 +13,18 @@ class MaterielRow extends Component {
         const emprunterPar = <td>&nbsp;</td>;
         let button = <td>&nbsp;</td>
 
+        let quantityClass = "";
+        if (materiel.quantitystock < 2) {
+            quantityClass = "QtyDanger";
+        } else if (materiel.quantitystock < 5) {
+            quantityClass = "QtyWarning";
+        }
+
         return (
-            <tr>
+            <tr className={quantityClass}>
                 <td>{materiel.description}</td>
                 <td>{materiel.quantitystock}</td>
+                <td>{materiel.quantityused}</td>
                 <td>{materiel.subcategory.category.libelle} {materiel.subcategory.libelle}</td>
                 {emprunterPar}
                 {button}

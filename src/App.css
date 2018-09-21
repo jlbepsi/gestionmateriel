@@ -31,6 +31,15 @@ div.main {
   padding: 10px;
 }
 
+tr.QtyWarning {
+    color: white;
+    background-color: #a56f14;
+}
+tr.QtyDanger {
+    color: white;
+    background-color: brown;
+}
+
 .footer {
   position: absolute;
   /*bottom: 0;*/

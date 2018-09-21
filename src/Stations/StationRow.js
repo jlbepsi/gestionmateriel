@@ -30,8 +30,7 @@ class StationRow extends Component {
         let composants = 'Boitier: ' + station.boitier.libelle + '\n' + station.cartemere.libelle
                         + '(' + station.cpu.libelle + ', ' + station.ram1.libelle + this.getLibelleWithComa(station.ram2)
                         + this.getLibelleWithComa(station.ram3) + this.getLibelleWithComa(station.ram4) + ')';
-        composants +=  '\nDisques: ' +  station.hdd1.libelle + this.getLibelleWithComa(station.hdd2) + this.getLibelleWithComa(station.hdd2)
-                   + this.getLibelleWithComa(station.hdd3)+ this.getLibelleWithComa(station.hdd4)+ this.getLibelleWithComa(station.hdd5);
+        composants +=  '\nDisques: ' +  station.hdd1.libelle + this.getLibelleWithComa(station.hdd2) + this.getLibelleWithComa(station.hdd3);
         composants += '\nCartes réseaux: ' + this.getLibelle(station.networkCard1) + this.getLibelleWithComa(station.networkCard2) + this.getLibelleWithComa(station.networkCard3);
         composants += '\nCarte graphique: ' + this.getLibelle(station.graphicCard);
 
