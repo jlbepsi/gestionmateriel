@@ -55,7 +55,7 @@ class PortableTable extends Component {
                 <Table size="sm" bordered striped>
                     <thead>
                         <tr>
-                            <th width="120">Identifiant</th>
+                            <th width="120">Numéro MI</th>
                             <th>Libellé</th>
                             <th>Processeur</th>
                             <th width="120">Mémoire</th>

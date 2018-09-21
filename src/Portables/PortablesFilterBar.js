@@ -34,7 +34,7 @@ class PortablesFilterBar extends Component {
                 <Label>
                     Identifiant :
                     <Input type="text" name="text" id="identifiantText"
-                           placeholder="Identifiant ..."
+                           placeholder="Numéro du MI ..."
                            value={this.props.identifiantText}
                            onChange={this.handleIdentifiantTextChange}
                     />

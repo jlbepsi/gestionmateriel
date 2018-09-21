@@ -14,8 +14,9 @@ class PortableEmprunter extends Component {
             laptop: {
                 id : 0,
                 libelle : '',
-                libellecourt : '',
                 description : '',
+                mi : '',
+                numserie : '',
                 couleur : '',
                 marque : '',
                 memory : 4,
@@ -125,7 +126,7 @@ class PortableEmprunter extends Component {
 
 
                 <div className="card border-info">
-                    <div className="card-header bg-info">Portable : {this.state.laptop.identifiant}</div>
+                    <div className="card-header bg-info">Portable : {this.state.laptop.mi}</div>
                     <div className="card-body">
                         <h5 className="card-title">{this.state.laptop.libelle}</h5>
                         <ul>

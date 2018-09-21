@@ -41,7 +41,7 @@ class PortableRow extends Component {
 
         return (
             <tr>
-                <td>{laptop.marque}-{laptop.id}</td>
+                <td>{laptop.mi}</td>
                 <td>{laptop.libelle}</td>
                 <td>{laptop.cpu}</td>
                 <td>{laptop.memory} Go</td>

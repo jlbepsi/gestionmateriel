@@ -13,8 +13,9 @@ class PortableModify extends Component {
             laptop: {
                 id : 0,
                 libelle : '',
-                libellecourt : '',
                 description : '',
+                mi : '',
+                numserie : '',
                 couleur : '',
                 marque : '',
                 memory : 4,
@@ -66,7 +67,21 @@ class PortableModify extends Component {
                 <h3>{this.title}</h3>
 
                 <Form onSubmit={this.handleSubmit}>
-                    
+
+                    <FormGroup>
+                        <Label for="mi">Numéro MI</Label>
+                        <Input type="text" name="mi" id="mi"
+                               value={this.state.laptop.mi}
+                               onChange={this.handleInputChange} />
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label for="numserie">Numéro de série</Label>
+                        <Input type="text" name="numserie" id="numserie"
+                               value={this.state.laptop.numserie}
+                               onChange={this.handleInputChange} />
+                    </FormGroup>
+
                     <FormGroup>
                         <Label for="marque">Marque</Label>
                             <Input type="text" name="marque" id="marque"
@@ -82,9 +97,9 @@ class PortableModify extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="libellecourt">Libellé court</Label>
-                        <Input type="text" name="libellecourt" id="libellecourt"
-                               value={this.state.laptop.libellecourt}
+                        <Label for="description">Description</Label>
+                        <Input type="text" name="description" id="description"
+                               value={this.state.laptop.description}
                                onChange={this.handleInputChange} />
                     </FormGroup>
 
