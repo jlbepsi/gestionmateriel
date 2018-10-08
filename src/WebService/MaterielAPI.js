@@ -4,7 +4,7 @@ export default class MaterielAPI extends BaseAPI {
 
     // Initializing important variables
     constructor() {
-        super('http://localhost:8080/api/components');
+        super('http://192.168.100.185:8080/api/components');
     }
 
     /*

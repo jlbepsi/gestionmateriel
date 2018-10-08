@@ -54,3 +54,28 @@ tr.QtyDanger {
 .login-panel {
   margin-top: 10%;
 }
+
+
+
+.fixed_header{
+  width: 560px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.fixed_header tbody{
+  display:block;
+  width: 100%;
+  overflow: auto;
+  height: 300px;
+}
+
+.fixed_header thead tr {
+  display: block;
+}
+
+.fixed_header th, .fixed_header td {
+  padding: 5px;
+  text-align: left;
+}
+

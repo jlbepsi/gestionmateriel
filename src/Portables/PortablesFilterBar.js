@@ -32,7 +32,7 @@ class PortablesFilterBar extends Component {
         return (
             <Form inline>
                 <Label>
-                    Identifiant :
+                    MI :
                     <Input type="text" name="text" id="identifiantText"
                            placeholder="Numéro du MI ..."
                            value={this.props.identifiantText}

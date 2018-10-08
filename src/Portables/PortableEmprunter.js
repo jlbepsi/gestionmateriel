@@ -141,17 +141,13 @@ class PortableEmprunter extends Component {
 
                 <br />
 
-                <div className="card border-success">
-                    <div className="card-header bg-success text-white">Emprunteur : {fullName}</div>
+                <div className="card border-secondary">
+                    <div className="card-header bg-secondary text-white">Emprunteur : {fullName}</div>
                     <div className="card-body">
-                        {isEmprunteurPresent === false &&
-                        <h5 className="card-title">Sélectionner un emprunteur</h5>
-                        }
-
                         {isEmprunteurPresent === true &&
                         <Form onSubmit={this.handleSubmit}>
-                            <FormGroup row>
-                                <Button color="primary">Emprunter</Button>
+                            <FormGroup>
+                                <Button color="primary">Valider l'emprunteur</Button>
                             </FormGroup>
                         </Form>
                         }

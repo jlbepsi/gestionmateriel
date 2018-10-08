@@ -10,7 +10,7 @@ class PortableTable extends Component {
 
 
     render() {
-        const identifiantText = this.props.identifiantText.toLowerCase();
+        const miText = this.props.identifiantText.toLowerCase();
         const emprunteurText = this.props.emprunteurText.toLowerCase();
         const ramMin = this.props.ramMin;
         const portableLibre = this.props.portableLibre;
@@ -29,8 +29,7 @@ class PortableTable extends Component {
             if (laptop.memory < ramMin) {
                 return;
             }
-            identifiant = laptop.marque.toLowerCase() + "-" + laptop.id;
-            if (identifiant.indexOf(identifiantText) === -1) {
+            if (! laptop.mi.startsWith(miText)) {
                 return;
             }
             if (emprunteurText !== '' &&

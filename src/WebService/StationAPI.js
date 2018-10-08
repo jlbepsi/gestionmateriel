@@ -4,7 +4,7 @@ export default class StationAPI extends BaseAPI {
 
     // Initializing important variables
     constructor() {
-        super('http://localhost:8080/api/computers');
+        super('http://192.168.100.185:8080/api/computers');
     }
 
     /*

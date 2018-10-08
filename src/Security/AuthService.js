@@ -4,8 +4,8 @@ import decode from 'jwt-decode';
 export default class AuthService {
     // Initializing important variables
     constructor(domain) {
-        this.domain = domain || 'http://localhost:8081/api/auth' // API server domain
-        AuthService.fetch = AuthService.fetch.bind(this) // React binding stuff
+        this.domain = domain || 'http://192.168.100.185:8081/api/auth'; // API server domain
+        AuthService.fetch = AuthService.fetch.bind(this); // React binding stuff
         this.login = this.login.bind(this)
     }
 

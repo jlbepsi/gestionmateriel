@@ -4,7 +4,7 @@ export default class BaseAPI {
 
     // Initializing important variables
     constructor(domain) {
-        this.domain = domain || 'http://localhost:8080/api/portables' // API server domain
+        this.domain = domain // API server domain
     }
 
     apiGetAll(){
